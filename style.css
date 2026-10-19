@@ -52,8 +52,8 @@ html, body {
 }
 
 #score {
-  font-size: 44px;
-  font-weight: 700;
+  font-size: 40px;
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
@@ -113,69 +113,63 @@ html, body {
   cursor: pointer;
 }
 
-.card {
+.intro {
   text-align: center;
-  padding: 32px 36px 28px;
-  border-radius: 28px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
-  max-width: 380px;
-  width: 100%;
-  animation: rise 0.9s cubic-bezier(.2, .8, .2, 1) both;
-}
-
-.card.small { max-width: 260px; padding: 24px; }
-
-.greeting {
-  margin: 0 0 4px;
-  font-size: 14px;
-  letter-spacing: 0.18em;
-  text-transform: lowercase;
-  color: var(--accent);
+  text-shadow: 0 1px 18px rgba(10, 16, 40, 0.28);
+  animation: rise 1.2s ease both;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(36px, 10.5vw, 54px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-size: clamp(30px, 7vw, 46px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
   line-height: 1;
 }
 
-.tagline {
-  margin: 12px 0 22px;
-  font-size: 16px;
-  line-height: 1.4;
-  color: var(--ink-soft);
-}
-
-.card button {
+.go {
+  margin-top: 18px;
   font: inherit;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: #1a2247;
-  background: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: none;
   border: 0;
-  border-radius: 999px;
-  padding: 12px 40px;
+  padding: 8px 12px;
   cursor: pointer;
-  box-shadow: 0 6px 24px rgba(255, 210, 122, 0.45);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  animation: breathe 2.8s ease-in-out infinite;
 }
 
-.card button:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(255, 210, 122, 0.65); }
-.card button:active { transform: translateY(1px); }
-.card button:focus-visible, #mute:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.go .touch { display: none; }
 
-.hint {
-  margin: 18px 0 0;
-  font-size: 12.5px;
-  color: var(--ink-soft);
-  opacity: 0.85;
+@media (hover: none) {
+  .go .mouse { display: none; }
+  .go .touch { display: inline; }
+}
+
+.go:focus-visible, #mute:focus-visible { outline: 1px solid var(--ink-soft); outline-offset: 4px; }
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* Di giorno il testo diventa scuro, per leggerlo sul cielo chiaro */
+body.day {
+  --ink: #18204a;
+  --ink-soft: rgba(24, 32, 74, 0.62);
+}
+
+body.day .intro,
+body.day #hud,
+body.day #toast {
+  text-shadow: 0 1px 16px rgba(255, 255, 255, 0.55);
+}
+
+body.day #mute {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(24, 32, 74, 0.15);
 }
 
 /* Toast */
@@ -184,9 +178,10 @@ h1 {
   left: 50%;
   top: 22%;
   transform: translate(-50%, 8px);
-  font-size: clamp(20px, 5vw, 28px);
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
   opacity: 0;
   pointer-events: none;
@@ -202,7 +197,7 @@ h1 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card { animation: none; }
+  .intro, .go { animation: none; }
   #score { transition: none; }
 }
 

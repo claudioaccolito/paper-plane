@@ -38,13 +38,6 @@ function currentHour(elapsed) {
   return d.getHours() + d.getMinutes() / 60;
 }
 
-function greeting(h) {
-  if (h >= 5 && h < 12) return 'buongiorno';
-  if (h >= 12 && h < 18) return 'buon pomeriggio';
-  if (h >= 18 && h < 22.5) return 'buonasera';
-  return 'buonanotte';
-}
-
 // --- scena -----------------------------------------------------------------
 
 const canvas = $('scene');
@@ -88,17 +81,6 @@ const WHITE = new THREE.Color(1, 1, 1);
 const WARM = new THREE.Color(0xfff0b8);
 const GOLD = new THREE.Color(0xffc23d);
 
-const MILESTONES = {
-  10: 'bel volo',
-  25: 'che leggerezza',
-  50: 'sopra le nuvole',
-  100: 'cento lucine!',
-  200: 'il cielo è tuo',
-  350: 'aeroplanino esperto',
-  500: 'leggendario ✦',
-  1000: 'mille lucine ✦✦',
-};
-
 // --- interfaccia -----------------------------------------------------------
 
 const ui = {
@@ -111,7 +93,6 @@ const ui = {
   toast: $('toast'),
   veil: $('veil'),
 };
-$('greeting').textContent = greeting(currentHour(0));
 ui.best.textContent = `record ${best}`;
 
 function syncMuteButton() {
@@ -130,7 +111,6 @@ function toast(text) {
 
 let bumpTimer = 0;
 function setScore(v) {
-  const before = score;
   score = v;
   ui.score.textContent = score;
   if (!reducedMotion) {
@@ -138,16 +118,13 @@ function setScore(v) {
     clearTimeout(bumpTimer);
     bumpTimer = setTimeout(() => ui.score.classList.remove('bump'), 120);
   }
-  for (const m of Object.keys(MILESTONES)) {
-    if (before < m && score >= m) toast(MILESTONES[m]);
-  }
   if (score > best) {
     best = score;
     ui.best.textContent = `record ${best}`;
     store.set('aeroplanino.best', best);
     if (!recordShown && startBest > 0) {
       recordShown = true;
-      toast('nuovo record ✦');
+      toast('nuovo record');
     }
   }
 }
@@ -272,6 +249,7 @@ function update(dt) {
   scene.background = sky.fogColor;
   world.setLook(sky.horizon, sky.night);
   plane.setLook(sky.horizon, sky.night);
+  document.body.classList.toggle('day', sky.night < 0.35);
   ui.veil.style.setProperty('--veil', `#${sky.fogColor.getHexString(THREE.SRGBColorSpace)}`);
 
   // dove vuole andare l'aereo
