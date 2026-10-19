@@ -178,10 +178,9 @@ body.day #mute {
   left: 50%;
   top: 22%;
   transform: translate(-50%, 8px);
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  font-size: clamp(20px, 4.5vw, 28px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
   opacity: 0;
   pointer-events: none;

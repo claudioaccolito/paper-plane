@@ -71,6 +71,29 @@ let boundX = 8;
 const Y_MID = 0.5;
 const Y_HALF = 4.5;
 
+const MILESTONES = {
+  10: 'bel volo',
+  25: 'che leggerezza',
+  50: 'sopra le nuvole',
+  100: 'cento lucine!',
+  200: 'il cielo è tuo',
+  350: 'aeroplanino esperto',
+  500: 'leggendario ✦',
+  1000: 'mille lucine ✦✦',
+};
+
+// una frase diversa a ogni visita
+const TITLES = [
+  'pronti al decollo',
+  'ora di volare',
+  'vento in coda',
+  'cielo libero',
+  'si parte',
+  'rotta verso le nuvole',
+  'piega, lancia, vola',
+  'pista libera',
+];
+
 const input = { x: 0, y: 0, keys: new Set() };
 const caught = [];
 const tipL = new THREE.Vector3();
@@ -94,6 +117,7 @@ const ui = {
   veil: $('veil'),
 };
 ui.best.textContent = `record ${best}`;
+$('title').textContent = TITLES[Math.floor(Math.random() * TITLES.length)];
 
 function syncMuteButton() {
   ui.mute.classList.toggle('off', sound.muted);
@@ -111,6 +135,7 @@ function toast(text) {
 
 let bumpTimer = 0;
 function setScore(v) {
+  const before = score;
   score = v;
   ui.score.textContent = score;
   if (!reducedMotion) {
@@ -118,13 +143,16 @@ function setScore(v) {
     clearTimeout(bumpTimer);
     bumpTimer = setTimeout(() => ui.score.classList.remove('bump'), 120);
   }
+  for (const m of Object.keys(MILESTONES)) {
+    if (before < m && score >= m) toast(MILESTONES[m]);
+  }
   if (score > best) {
     best = score;
     ui.best.textContent = `record ${best}`;
     store.set('aeroplanino.best', best);
     if (!recordShown && startBest > 0) {
       recordShown = true;
-      toast('nuovo record');
+      toast('nuovo record ✦');
     }
   }
 }
