@@ -75,11 +75,11 @@ const MILESTONES = {
   10: 'bel volo',
   25: 'che leggerezza',
   50: 'sopra le nuvole',
-  100: 'cento lucine!',
+  100: 'wow! che volo',
   200: 'il cielo è tuo',
-  350: 'aeroplanino esperto',
+  350: 'stai dominando',
   500: 'leggendario ✦',
-  1000: 'mille lucine ✦✦',
+  1000: 'stai splendendo ✦✦',
 };
 
 // una frase diversa a ogni visita
