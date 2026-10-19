@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="description" content="Un aeroplanino di carta, il cielo, qualche lucina. Un piccolo gioco 3D nel browser.">
+  <meta name="theme-color" content="#1a2247">
+  <title>Aeroplanino di carta</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="scene" aria-label="Un aeroplanino di carta che vola tra le nuvole"></canvas>
+  <div id="veil" aria-hidden="true"></div>
+
+  <div id="hud" class="hidden">
+    <div class="score-box">
+      <div id="score">0</div>
+      <div id="best">record 0</div>
+    </div>
+  </div>
+
+  <button id="mute" type="button" aria-label="Disattiva suoni" title="Suoni (M)">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9h4l5-4v14l-5-4H4z" />
+      <path class="wave" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" />
+      <path class="cross" d="M16 9l6 6M22 9l-6 6" />
+    </svg>
+  </button>
+
+  <div id="intro" class="overlay">
+    <div class="card">
+      <p id="greeting" class="greeting">ciao</p>
+      <h1>aeroplanino</h1>
+      <p class="tagline">un aeroplanino di carta, il cielo, qualche lucina.</p>
+      <button id="start" type="button">vola</button>
+      <p class="hint">muovi il mouse o trascina il dito &middot; raccogli le luci</p>
+    </div>
+  </div>
+
+  <div id="pause" class="overlay hidden">
+    <div class="card small">
+      <p class="tagline">in pausa</p>
+      <button id="resume" type="button">riprendi</button>
+    </div>
+  </div>
+
+  <div id="toast" aria-live="polite"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

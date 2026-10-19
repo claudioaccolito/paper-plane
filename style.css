@@ -1,0 +1,208 @@
+:root {
+  --ink: #ffffff;
+  --ink-soft: rgba(255, 255, 255, 0.78);
+  --glass: rgba(12, 18, 44, 0.28);
+  --glass-edge: rgba(255, 255, 255, 0.22);
+  --accent: #ffd27a;
+  --veil: #ffffff;
+  --font: ui-rounded, "SF Pro Rounded", "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #1a2247;
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: block;
+  touch-action: none;
+}
+
+#veil {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 0%, var(--veil) 85%);
+  opacity: 0;
+}
+
+.hidden { display: none !important; }
+
+/* HUD */
+#hud {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+  pointer-events: none;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+#score {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  transition: transform 0.15s ease-out;
+}
+
+#score.bump { transform: scale(1.15); }
+
+#best {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+#mute {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-edge);
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  z-index: 5;
+}
+
+#mute svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#mute svg path:first-child { fill: currentColor; }
+#mute .cross { display: none; }
+#mute.off .cross { display: inline; }
+#mute.off .wave { display: none; }
+
+/* Overlays */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.card {
+  text-align: center;
+  padding: 32px 36px 28px;
+  border-radius: 28px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  max-width: 380px;
+  width: 100%;
+  animation: rise 0.9s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.card.small { max-width: 260px; padding: 24px; }
+
+.greeting {
+  margin: 0 0 4px;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(36px, 10.5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.tagline {
+  margin: 12px 0 22px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.card button {
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #1a2247;
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 40px;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(255, 210, 122, 0.45);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card button:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(255, 210, 122, 0.65); }
+.card button:active { transform: translateY(1px); }
+.card button:focus-visible, #mute:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.hint {
+  margin: 18px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  opacity: 0.85;
+}
+
+/* Toast */
+#toast {
+  position: fixed;
+  left: 50%;
+  top: 22%;
+  transform: translate(-50%, 8px);
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { animation: none; }
+  #score { transition: none; }
+}
+
